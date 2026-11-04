@@ -350,15 +350,26 @@
     /* 맨 아래 신청하기 버튼이 화면에 보이는 동안은 숨김(버튼 두 개가 같이 보이지 않게). 숨긴 동안 탭 키로도 안 감 */
     .cta-fixed.is-hidden { visibility: hidden; }
 
-    /* ---------- 문의·꼬리말 ---------- */
-    footer {
+    /* ---------- 꼬리말(세움 정보) ----------
+       폭 960px·배경 별 위에 보이기는 위의 "main, footer" 규칙을 그대로 씀.
+       간격 규칙(.footer-name 등)은 ".site-footer p"보다 우선하도록 앞에 .site-footer를 붙임 */
+    .site-footer {
       margin-top: 96px;
-      padding-bottom: 48px;
+      padding: 0 16px 48px;        /* 위 간격은 margin-top 96px만(늘리지 않음) */
+      font-family: "Pretendard", sans-serif;
       font-size: 14px;
-      line-height: 22px;
-      color: rgba(255, 255, 255, 0.7);
+      line-height: 24px;           /* 정수 px(1.7배 = 23.8px 대신) */
+      color: #b3b3b3;
       text-align: center;
     }
+    .site-footer p,
+    .site-footer address { margin: 0 0 4px; font-style: normal; }
+    .site-footer span { white-space: nowrap; }   /* 항목 중간에서 줄이 끊기지 않게 */
+    .site-footer address span { display: inline-block; margin: 0 4px; }
+    .site-footer a { color: inherit; text-decoration: underline; }
+    .site-footer .footer-name { color: #ffffff; font-weight: 600; margin-bottom: 8px; }
+    .site-footer .footer-notice { margin-top: 16px; font-size: 12px; }
+    .site-footer .footer-copy { margin-top: 8px; }
 
     .visually-hidden {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -598,8 +609,24 @@
     </div>
   </main>
 
-  <footer>
-    <p>법무법인 세움</p>
+  <footer class="site-footer">
+    <p class="footer-name">법무법인 세움</p>
+    <p>
+      <span>대표변호사 정호석</span> <span aria-hidden="true">|</span>
+      <span>광고책임변호사 이승민</span> <span aria-hidden="true">|</span>
+      <span>개인정보보호책임자 이현섭</span>
+    </p>
+    <address>
+      <span>(06141) 서울특별시 강남구 테헤란로 211</span>
+      <span>한국고등교육재단빌딩 5층, 9층, 13층</span>
+    </address>
+    <p>
+      <span>전화 <a href="tel:025623115">02.562.3115</a></span> <span aria-hidden="true">|</span>
+      <span>팩스 02.562.3393</span> <span aria-hidden="true">|</span>
+      <span>사업자등록번호 113-86-62209</span>
+    </p>
+    <p class="footer-notice">CES®는 미국소비자기술협회(CTA)의 등록 상표이며, 본 행사는 CTA가 주최하거나 후원하는 행사가 아닙니다.</p>
+    <p class="footer-copy">© 2026 법무법인 세움</p>
   </footer>
 
   <!-- 모바일 하단 고정 신청하기 버튼(767px 이하에서만 보임) -->
