@@ -181,28 +181,26 @@
     /* ---------- 1. 히어로 ---------- */
     /* 히어로 높이: 화면 가득(주소창이 보이는 상태의 화면 높이 svh). svh를 모르는 브라우저는 앞 줄의 vh를 씀.
        내용이 화면보다 길면(낮은 화면) 히어로가 내용만큼 늘어남(min-height).
-       모바일(767px 이하)은 하단 고정 버튼이 화면 아래 84px(아래 여백 20 + 버튼 60 + 테두리 4)를 덮으므로
-       아래 여백에 84px를 더해, 버튼에 가리지 않는 영역의 가운데에 내용이 오게 함.
+       모바일도 첫 화면에는 하단 고정 버튼이 없으므로(히어로 버튼이 보이는 동안 숨김) 모든 화면에서 내용은 화면 가운데.
        위아래 여백 64px = ▼ 누르는 영역 48px + 내용과의 간격 16px */
     .hero {
-      --cover: calc(84px + env(safe-area-inset-bottom, 0px));   /* 고정 버튼이 덮는 높이(모바일) */
       position: relative;          /* 첫 등장 진행 바(.boot)와 ▼를 히어로 안에 겹쳐 놓기 위해 */
       min-height: 100vh;
       min-height: 100svh;
       display: grid;
       place-content: center;
       gap: 36px;
-      padding: 64px 0 calc(64px + var(--cover));
+      padding: 64px 0;
       text-align: center;
     }
 
     /* ▼ 아래 내용 보기: RPG 대화창 표시. 4px 픽셀 7·5·3·1칸 = 28×16px, 흰색.
        누르는 영역은 48×48px(그림은 그 가운데라 영역 아래 끝 + 16px에 그림 아래 끝).
-       모바일: 그림 아래 끝이 고정 버튼 위 16px / 768px 이상: 히어로 맨 아래에서 16px 위 */
+       모든 화면에서 그림 아래 끝이 히어로 맨 아래에서 16px 위 */
     .more {
       position: absolute;
       left: 50%;
-      bottom: var(--cover);
+      bottom: 0;
       width: 48px;
       height: 48px;
       margin-left: -24px;
@@ -251,7 +249,7 @@
       font-size: 24px;
       line-height: 36px;
     }
-    .hero .btn { display: none; }  /* 모바일은 하단 고정 버튼을 씀 */
+    .hero .btn { justify-self: center; }   /* 모든 화면에서 날짜 아래 가운데에 신청하기 버튼 */
 
     /* ---------- 섹션 공통 ---------- */
     section + section { margin-top: 96px; }
@@ -542,8 +540,6 @@
       body { font-size: 18px; line-height: 30px; padding-bottom: 0; }
       main, footer { padding: 0 32px; }
       .cta-fixed { display: none; }
-      .hero { --cover: 0px; }      /* 고정 버튼이 없으니 덮는 높이 0 → 위아래 여백 같게, ▼는 맨 아래 */
-      .hero .btn { display: flex; justify-self: center; }
       .page-cta { margin-top: 120px; }
       section + section { margin-top: 120px; }
       h2 {
@@ -717,15 +713,26 @@
   <a class="btn cta-fixed" href="【구글폼 링크】" target="_blank" rel="noopener"><span class="rocket rocket--lead" aria-hidden="true"></span>신청하기<span class="rocket" aria-hidden="true"></span><span class="visually-hidden"> (새 창에서 열림)</span></a>
 
   <script>
-    // 맨 아래 신청하기 버튼이 화면에 조금이라도 보이면 하단 고정 버튼을 숨기고, 벗어나면 다시 보여 줌.
-    // (이 기능을 못 쓰는 브라우저에서는 고정 버튼이 항상 보임)
+    // 모바일 하단 고정 신청하기 버튼(767px 이하에만 있음): 아래 두 조건을 모두 만족할 때만 보임
+    //  ① 히어로 신청하기 버튼이 화면 위로 완전히 지나감  ② 맨 아래 신청하기 버튼이 화면에 안 보임
+    // 나타나고 숨겨지는 것은 한 번에(움직임 없음). 이 기능을 못 쓰는 브라우저에서는 고정 버튼이 항상 보임
     (function () {
       var cta = document.querySelector('.cta-fixed');
-      var apply = document.querySelector('.page-cta');
-      if (!cta || !apply || !('IntersectionObserver' in window)) return;
-      new IntersectionObserver(function (entries) {
-        cta.classList.toggle('is-hidden', entries[0].isIntersecting);
-      }).observe(apply);
+      var heroBtn = document.querySelector('.hero .btn');
+      var bottomBtn = document.querySelector('.page-cta');
+      if (!cta || !heroBtn || !bottomBtn || !('IntersectionObserver' in window)) return;
+      var heroPassed = false;      // 히어로 버튼이 화면 위쪽으로 벗어났는지
+      var bottomShown = false;     // 맨 아래 버튼이 화면에 보이는지
+      cta.classList.add('is-hidden');   // 첫 화면은 히어로 버튼이 보이므로 숨긴 채 시작
+      var watch = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.target === heroBtn) heroPassed = !e.isIntersecting && e.boundingClientRect.bottom <= 0;
+          else bottomShown = e.isIntersecting;
+        });
+        cta.classList.toggle('is-hidden', !(heroPassed && !bottomShown));
+      });
+      watch.observe(heroBtn);
+      watch.observe(bottomBtn);
     })();
 
     // 첫 등장 연출: 서체(글자용·이모지용)를 받으면 출발, 늦어도 1.5초 뒤 출발. 3.1초에 끝남
