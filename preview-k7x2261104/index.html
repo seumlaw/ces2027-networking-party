@@ -338,6 +338,42 @@
       outline-offset: 8px;
     }
     .btn:focus-visible { color: var(--yellow); }
+    /* 버튼 로켓: "신청하기" 좌우에 하나씩, 글자와 8px(두 로켓 모두 원래 이모지 방향). 버튼이 눌리면 함께 4px 내려감 */
+    .btn { white-space: nowrap; }               /* 버튼 글자가 줄바꿈되지 않게 */
+    .btn .rocket { margin-left: 8px; }          /* 오른쪽 로켓 */
+    .btn .rocket--lead { margin-left: 0; margin-right: 8px; }   /* 왼쪽 로켓 */
+    /* 버튼 로켓 흔들림: 커밍순 로켓과 같은 값(1.2초에 한 번, steps(2)로 위 2px ↔ 아래 2px 두 칸).
+       커밍순과 달리 시작 시간 0초. 좌우 로켓이 같은 순간에 시작해 같은 박자로 움직임.
+       회전(transform: rotate)과 부딪치지 않게 위아래 이동은 translate 속성으로 */
+    .btn .rocket { animation: rocket-bob 1.2s steps(2, end) infinite; }
+    @keyframes rocket-bob {
+      from { translate: 0 -2px; }
+      to   { translate: 0 6px; }      /* steps(2)라 실제로는 -2px, +2px 두 칸만 보임 */
+    }
+    .btn:active .rocket { animation-play-state: paused; }   /* 누르는 동안은 그 자리에 멈춤 */
+
+    /* ---------- 로켓(한 곳에서 관리) ----------
+       버튼 3곳과 첫 등장 진행 바의 로켓이 모두 이 규칙을 씀. HTML에는 <span class="rocket" aria-hidden="true"></span>만 둠.
+       PNG로 바꿀 때: 아래 .rocket::before의 content 줄을 지우고
+         .rocket { background: url(assets/rocket.png) center / contain no-repeat; }  를 넣으면 됨.
+       오른쪽을 향한 PNG면 진행 바 로켓의 --rocket-turn을 0deg로 바꿈 */
+    .rocket {
+      --rocket-size: 24px;         /* 크기(12의 배수) */
+      --rocket-turn: 0deg;         /* 회전 */
+      display: inline-block;
+      flex: none;
+      width: var(--rocket-size);
+      height: var(--rocket-size);
+      font-family: "Mona12", sans-serif;   /* 모나 픽셀 이모지 */
+      font-weight: 400;
+      font-size: var(--rocket-size);
+      line-height: var(--rocket-size);
+      letter-spacing: 0;
+      text-align: center;
+      -webkit-font-smoothing: none;
+      transform: rotate(var(--rocket-turn));
+    }
+    .rocket::before { content: "🚀"; }
 
     /* 모바일 하단 고정 버튼 */
     .cta-fixed {
@@ -380,7 +416,7 @@
 
     /* ---------- 첫 등장 연출 (처음 방문할 때 한 번) ----------
        서체를 받으면 출발(최대 1.5초 대기, 기다리는 동안은 별만 보임)
-       0 – 1.0초 진행 바 10% → 100%(1%씩 칸 단위)
+       0 – 1.0초 진행 바 0% → 100%(1%씩 칸 단위). 바 아래 로켓이 왼쪽 끝에서 오른쪽 끝까지 함께 이동, 1.0초에 사라짐
        1.0 – 2.2초 READY! 두 번 깜빡임(0.3초 켜짐 · 0.3초 꺼짐 × 2)
        2.2초 바·READY! 사라짐 → 제목 2.2 / 2.5 / 2.8초 → 날짜·버튼 3.1초
        시간은 0s 길이 애니메이션 + 시작 시간(delay)으로 맞춤(0s는 소수점 오차로 꺼진 채 멈추지 않음) */
@@ -400,6 +436,7 @@
 
     /* 진행 바: 커밍순과 같음(흰 테두리 4px, 네 모서리 4×4px 비움). 바깥 높이 24px(600px 이하) */
     .boot__bar {
+      position: relative;          /* 바 아래 로켓(.boot__rocket)의 기준 */
       width: min(calc(100% - 8px), 600px);
       height: 16px;
       box-shadow:
@@ -410,13 +447,49 @@
       width: 100%;
       height: 100%;
       background: var(--blue);
-      animation: boot-fill 1s steps(90, end) both;   /* 10%에서 1%씩 90칸 */
+      animation: boot-fill 1s steps(100, end) both;  /* 0%에서 1%씩 100칸(커밍순은 10%에서 출발) */
     }
-    @keyframes boot-fill { from { width: 10%; } }
+    @keyframes boot-fill { from { width: 0; } }
 
-    /* READY!: 커밍순 10% 숫자 자리·크기(600px 이하 24px) */
+    /* 바 아래 로켓: 흰 테두리 4px 아래로 8px 띄움(위 = 바 높이 + 12px).
+       채움과 같은 1초·같은 100칸으로 왼쪽 끝 → 오른쪽 끝(바 폭 − 로켓 크기)까지 이동. 1.0초(100%)에 사라짐 */
+    .boot__rocket {
+      --rocket-turn: 45deg;        /* 수평으로 오른쪽을 향하게 */
+      position: absolute;
+      left: 0;
+      top: calc(100% + 12px);
+      animation:
+        boot-rocket 1s steps(100, end) both,
+        boot-rocket-hide 0s 1s forwards;
+    }
+    @keyframes boot-rocket { from { left: 0; } to { left: calc(100% - var(--rocket-size)); } }
+    @keyframes boot-rocket-hide { to { visibility: hidden; } }
+
+    /* 바 아래 글자 줄: 로켓 줄 아래에 둠(겹치지 않게).
+       위 간격 = 흰 테두리 4 + 8 + 로켓 크기 + 8 → 899px 이하 44px, 900px 이상 56px
+       퍼센트 숫자(0 – 1.0초)와 READY!(1.0초부터)가 같은 자리를 번갈아 씀 */
+    .boot__label {
+      display: grid;
+      justify-items: center;
+      margin-top: 44px;
+    }
+    .boot__label > * { grid-area: 1 / 1; }
+
+    /* 퍼센트 숫자: 커밍순과 같은 Mona12 Regular, 흰색. 크기는 READY!와 같음(600px 이하 24px).
+       숫자는 스크립트가 채움 폭을 읽어 0 → 100으로 올림. 100%가 되는 1.0초에 사라짐 */
+    .boot__num {
+      font-family: "Mona12", sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 24px;
+      color: var(--white);
+      -webkit-font-smoothing: none;
+      animation: boot-num-hide 0s 1s forwards;
+    }
+    @keyframes boot-num-hide { to { visibility: hidden; } }
+
+    /* READY!: 숫자가 사라진 자리에 뜸(600px 이하 24px) */
     .boot__ready {
-      margin-top: 16px;
       font-family: var(--pixel);
       font-weight: 700;
       font-size: 24px;
@@ -443,6 +516,8 @@
     .is-waiting .boot { opacity: 0; }
     .is-waiting .boot,
     .is-waiting .boot__fill,
+    .is-waiting .boot__rocket,
+    .is-waiting .boot__num,
     .is-waiting .boot__ready,
     .is-waiting .boot-1, .is-waiting .boot-2, .is-waiting .boot-3, .is-waiting .boot-4,
     .is-waiting .boot-btn, .is-waiting .cta-fixed { animation-play-state: paused; }
@@ -459,7 +534,7 @@
       .hero__title { margin: 4px 0; line-height: 72px; }
       .hero__title span { display: inline; }
       .boot__bar { height: 28px; }                 /* 바깥 높이 36px */
-      .boot__ready { margin-top: 19px; font-size: 36px; line-height: 36px; }
+      .boot__num, .boot__ready { font-size: 36px; line-height: 36px; }
     }
 
     /* ---------- 768px 이상(태블릿): 고정 버튼 없앰, 글자 키움 ---------- */
@@ -503,7 +578,9 @@
         padding-left: 9px;
       }
       .boot__bar { height: 40px; }                 /* 바깥 높이 48px(시안 값) */
-      .boot__ready { margin-top: 27px; font-size: 40px; line-height: 40px; }   /* 시안 값(12의 배수 아님) */
+      .boot__rocket { --rocket-size: 36px; }       /* 진행 바 로켓: 899px 이하 24px, 900px 이상 36px */
+      .boot__label { margin-top: 56px; }          /* 로켓이 36px라 4 + 8 + 36 + 8 */
+      .boot__num, .boot__ready { font-size: 40px; line-height: 40px; }   /* 시안 값(12의 배수 아님) */
     }
 
     /* 움직임 줄이기 설정이면 별 반짝임·첫 등장 연출을 끄고 완성된 화면만 보여 줌
@@ -511,6 +588,8 @@
     @media (prefers-reduced-motion: reduce) {
       .twinkle { animation: none; }
       .boot { display: none !important; }
+      .boot__rocket { display: none; }            /* 진행 바 로켓도 안 보임 */
+      .btn .rocket { animation: none; }           /* 버튼 로켓은 흔들지 않고 제자리 */
       .boot-1, .boot-2, .boot-3, .boot-4, .boot-btn, .cta-fixed { animation: none !important; }
       .more svg { animation: none; }              /* ▼는 튀지 않고 그냥 보임 */
       html { scroll-behavior: auto; }             /* ▼를 누르면 미끄러지지 않고 바로 이동 */
@@ -545,8 +624,11 @@
     <header class="hero">
       <!-- 첫 등장 진행 바 (처음 방문할 때만 보임) -->
       <div class="boot" aria-hidden="true">
-        <div class="boot__bar"><div class="boot__fill"></div></div>
-        <p class="boot__ready">READY!</p>
+        <div class="boot__bar"><div class="boot__fill"></div><span class="rocket boot__rocket" aria-hidden="true"></span></div>
+        <div class="boot__label">
+          <p class="boot__num"><span class="boot__count">0</span>%</p>
+          <p class="boot__ready">READY!</p>
+        </div>
       </div>
 
       <h1>
@@ -555,7 +637,7 @@
         <span class="hero__event outline boot-3">Networking Party</span>
       </h1>
       <p class="hero__meta boot-4">【 Wednesday, January 10, 2027 】</p>
-      <a class="btn boot-btn" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
+      <a class="btn boot-btn" href="【구글폼 링크】" target="_blank" rel="noopener"><span class="rocket rocket--lead" aria-hidden="true"></span>신청하기<span class="rocket" aria-hidden="true"></span><span class="visually-hidden"> (새 창에서 열림)</span></a>
 
       <!-- ▼ 아래 내용 보기(신청하기 버튼과 함께 등장) -->
       <a class="more boot-btn" href="#about" aria-label="아래 내용 보기">
@@ -607,7 +689,7 @@
 
     <!-- 페이지 맨 아래 신청하기 버튼(가운데) -->
     <div class="page-cta">
-      <a class="btn" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
+      <a class="btn" href="【구글폼 링크】" target="_blank" rel="noopener"><span class="rocket rocket--lead" aria-hidden="true"></span>신청하기<span class="rocket" aria-hidden="true"></span><span class="visually-hidden"> (새 창에서 열림)</span></a>
     </div>
   </main>
 
@@ -632,7 +714,7 @@
   </footer>
 
   <!-- 모바일 하단 고정 신청하기 버튼(767px 이하에서만 보임) -->
-  <a class="btn cta-fixed" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
+  <a class="btn cta-fixed" href="【구글폼 링크】" target="_blank" rel="noopener"><span class="rocket rocket--lead" aria-hidden="true"></span>신청하기<span class="rocket" aria-hidden="true"></span><span class="visually-hidden"> (새 창에서 열림)</span></a>
 
   <script>
     // 맨 아래 신청하기 버튼이 화면에 조금이라도 보이면 하단 고정 버튼을 숨기고, 벗어나면 다시 보여 줌.
@@ -650,6 +732,18 @@
     (function () {
       var root = document.documentElement;
       if (!root.classList.contains('is-booting')) return;
+
+      // 퍼센트 숫자: 파란 채움이 실제로 채워진 폭을 읽어 0 → 100으로 올림(채움과 어긋나지 않게)
+      var bar = document.querySelector('.boot__bar');
+      var fill = document.querySelector('.boot__fill');
+      var count = document.querySelector('.boot__count');
+      (function tick() {
+        if (!root.classList.contains('is-booting')) return;
+        var p = Math.min(100, Math.round(fill.getBoundingClientRect().width / bar.clientWidth * 100));
+        count.textContent = p;
+        if (p < 100) requestAnimationFrame(tick);
+      })();
+
       var started = false;
       function start() {
         if (started) return;
