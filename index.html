@@ -15,6 +15,10 @@
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 
+  <!-- 서체를 다 받을 때까지 처음 등장 움직임을 멈춰 둠(아래 스크립트가 출발시킴).
+       JS가 꺼져 있으면 이 표시가 안 붙어서 바로 움직임 -->
+  <script>document.documentElement.classList.add('is-waiting');</script>
+
   <!-- 픽셀 서체: 모나(Mona, OFL 1.1) — 버전 2026.10.09 고정.
        글자는 Mona10x12, 이모지는 Mona12의 픽셀 이모지 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font@2026.10.09/web/mona.css">
@@ -184,8 +188,8 @@
       width: calc(var(--p) * 1%);
       height: 100%;
       position: relative;
-      /* 0%에서 1%씩 칸 단위로 차오름: 0.8초 뒤 시작, 1.2초 동안 */
-      animation: fill 1.2s steps(var(--p), end) 0.8s both;
+      /* 0%에서 1%씩 칸 단위로 차오름: 1.3초 뒤 시작(10%가 나타나는 1.0초 + 0.3초), 1.2초 동안 */
+      animation: fill 1.2s steps(var(--p), end) 1.3s both;
     }
     /* 파란 채움(::before)은 계속 켜 두고, 그 바로 뒤에 1칸(::after, 1% = 600px 기준 6px)을 더 붙여 깜빡임.
        채움이 줄었다 늘었다 하는 것처럼 보이지 않고 "다음 칸을 채우는 중"처럼 보이게 함 */
@@ -207,9 +211,9 @@
       width: max(6px, calc(100% / var(--p)));
       width: max(6px, round(nearest, calc(100% / var(--p)), 1px));
       opacity: 0;                                   /* 바가 다 차기 전에는 숨김 */
-      /* 바가 다 찬 뒤(2.0초) 0.5초 꺼진 채 쉬었다가 0.5초 켜짐 → 반복(1초 박자).
+      /* 바가 다 찬 뒤(2.5초) 0.5초 꺼진 채 쉬었다가 0.5초 켜짐 → 반복(1초 박자).
          속도는 1s를 바꾸면 됨 */
-      animation: blink-cell 1s step-end 2s infinite;
+      animation: blink-cell 1s step-end 2.5s infinite;
     }
     @keyframes blink-cell { 50% { opacity: 1; } }   /* 앞 절반 꺼짐, 뒤 절반 켜짐 */
     @keyframes fill { from { width: 0; } }
@@ -224,12 +228,12 @@
       display: inline-block;       /* 위아래로 움직이려면 필요 */
       margin-left: 0.25em;
       font-family: "Mona12", sans-serif;
-      /* 바가 다 찬 뒤(2.0초)부터 위아래 2px씩 두 칸으로 흔들림, 1.2초에 한 번 */
-      animation: bob 1.2s steps(2, end) 2s infinite;
+      /* 바가 다 찬 뒤(2.5초)부터 위아래 2px씩 두 칸으로 흔들림, 1.2초에 한 번 */
+      animation: bob 1.2s steps(2, end) 2.5s infinite;
     }
-    /* "10%" 글자: 바가 다 찬 뒤(0.8초 + 1.2초 = 2.0초)부터 0.5초 켜짐/0.5초 꺼짐을 계속 반복.
+    /* "10%" 글자: 바가 다 찬 뒤(1.3초 + 1.2초 = 2.5초)부터 0.5초 켜짐/0.5초 꺼짐을 계속 반복.
        속도는 1s(한 번 켜졌다 꺼지는 시간)를 바꾸면 됨. 바의 깜빡이는 칸과 같은 박자 */
-    .percent .value { animation: blink 1s step-end 2s infinite; }
+    .percent .value { animation: blink 1s step-end 2.5s infinite; }
     @keyframes blink { 50% { opacity: 0; } }
     @keyframes bob {
       from { transform: translateY(-2px); }
@@ -248,10 +252,23 @@
     @keyframes twinkle { 50% { opacity: 0.25; } }
 
     /* ---------- 처음 열 때 순서대로 "뿅" 등장 (서서히 밝아지지 않고 바로 켜짐) ---------- */
-    .intro { animation: appear 1ms step-end both; }
-    .intro--2 { animation-delay: 0.2s; }
-    .intro--3 { animation-delay: 0.4s; }
+    /* 제목 0초(혼자 0.4초 떠 있음) → 행사명 0.4초 → 진행 바 0.7초 → 10%·로켓 1.0초. 그 뒤 간격은 0.3s씩
+       (바꾸면 위의 진행 바 차오르기·깜빡임·로켓 시작 시간도 같은 만큼 옮길 것) */
+    /* 길이 0초: 시작 시간이 되는 순간 바로 켜짐.
+       (1ms 같은 아주 짧은 길이는 브라우저 소수점 오차로 꺼진 채 멈출 수 있어서 0초로 씀) */
+    .intro { animation: appear 0s both; }
+    .intro--2 { animation-delay: 0.4s; }
+    .intro--3 { animation-delay: 0.7s; }
+    .intro--4 { animation-delay: 1s; }
     @keyframes appear { from { opacity: 0; } }
+
+    /* 서체를 받는 동안은 시계를 멈춰 둠(안 보이는 상태로 대기) → 서체가 오면 위 순서대로 출발 */
+    .is-waiting .intro,
+    .is-waiting .progress__fill,
+    .is-waiting .progress__fill::after,
+    .is-waiting .percent .rocket,
+    .is-waiting .percent .value { animation-play-state: paused; }
+    .is-waiting .intro { opacity: 0; }   /* 기다리는 동안 확실히 숨김(제목은 시작 시간 0초라 멈춰 있어도 켜지기 때문) */
 
     /* 움직임 줄이기 설정이면 모든 움직임을 끄고 처음부터 완성된 화면을 보여줌 */
     @media (prefers-reduced-motion: reduce) {
@@ -315,7 +332,7 @@
     <div class="progress intro intro--3" role="progressbar" aria-label="신청 페이지 준비 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
       <div class="progress__fill"></div>
     </div>
-    <p class="percent intro intro--3"><span class="value"><span class="num">10</span>%</span><span class="rocket" aria-hidden="true">🚀</span></p>
+    <p class="percent intro intro--4"><span class="value"><span class="num">10</span>%</span><span class="rocket" aria-hidden="true">🚀</span></p>
 
     <p class="visually-hidden">신청 양식은 준비 중입니다. 곧 열립니다.</p>
   </main>
@@ -331,7 +348,17 @@
 
       bar.setAttribute('aria-valuenow', p);   // 화면낭독기에는 최종값만 전달
       num.textContent = p;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // 등장 순서 출발: 서체(글자용·이모지용)를 다 받으면 바로, 늦어도 1.5초 뒤에는 출발
+      var started = false;
+      function start() {
+        if (started) return;
+        started = true;
+        document.documentElement.classList.remove('is-waiting');
+        setTimeout(finish, 4000);             // 혹시 애니메이션이 안 돌아도 출발 4초 뒤엔 최종값
+      }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { start(); return; }
 
       var done = false;
       function finish() { done = true; num.textContent = p; }
@@ -343,8 +370,17 @@
         requestAnimationFrame(tick);
       }
       fill.addEventListener('animationend', finish);
-      setTimeout(finish, 4000);               // 혹시 애니메이션이 안 돌아도 4초 뒤엔 최종값
       tick();
+
+      setTimeout(start, 1500);
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('700 48px "Mona10x12"', 'COMING SOON'),
+          document.fonts.load('40px "Mona12"', '10%🚀⭐')
+        ]).then(start, start);
+      } else {
+        start();
+      }
     })();
   </script>
 
