@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>2027 CES SEUM Dinner Networking Party — Coming Soon</title>
+  <meta name="description" content="법무법인 세움 2027 CES 디너 네트워킹 파티. 신청 양식이 곧 열립니다.">
+
+  <!-- 카카오톡·SNS 공유 미리보기: 배포 후 og:url, og:image를 실제 주소로 바꾸세요 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="2027 CES SEUM Dinner Networking Party">
+  <meta property="og:description" content="Coming soon — 신청 양식이 곧 열립니다.">
+  <meta property="og:image" content="https://seum-ces2027-networking-party.netlify.app/og-image.png">
+  <meta property="og:url" content="https://seum-ces2027-networking-party.netlify.app/">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+  <!-- 픽셀 서체: 모나(Mona, OFL 1.1) — 버전 2026.10.09 고정.
+       글자는 Mona10x12, 이모지는 Mona12의 픽셀 이모지 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font@2026.10.09/web/mona.css">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --green: #00ff00;
+      --blue: #0000ff;
+      --black: #000000;
+      --white: #ffffff;
+      --cyan: #00e5ff;
+      --yellow: #ffff00;
+      --star: #ffd53d;
+      --pixel: "Mona10x12", "Mona12", "Courier New", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    body {
+      min-height: 100%;
+      padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);   /* 내용이 화면 폭보다 넓어지지 않게(좁은 화면에서 밀림 방지) */
+      place-items: center;
+      overflow: hidden;
+      font-family: var(--pixel);
+      color: var(--white);
+      background-color: var(--black);
+      /* 아래쪽 왼쪽 남색, 가운데 올리브, 오른쪽 청록이 은은하게 올라오는 밤하늘 */
+      background-image:
+        radial-gradient(60% 55% at 0% 100%, rgba(10, 12, 70, 0.95), transparent 70%),
+        radial-gradient(45% 45% at 50% 105%, rgba(70, 72, 25, 0.9), transparent 70%),
+        radial-gradient(55% 60% at 100% 100%, rgba(5, 70, 62, 0.95), transparent 70%),
+        radial-gradient(50% 40% at 50% 0%, rgba(0, 0, 0, 1), transparent);
+      -webkit-font-smoothing: none;
+      font-smooth: never;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 960px);
+      padding-top: 40px;   /* 시안처럼 글 묶음을 화면 가운데보다 20px 아래에 */
+      text-align: center;
+    }
+
+    /* ---------- 글자 외곽: 파란 그림자 → 검정 → 파랑 ----------
+       두께는 각 글자(.headline, .event)의 --s(그림자) --k(검정) --b(파랑)로 정함 */
+    .outline {
+      --r1: var(--k);
+      --r2: calc(var(--k) + var(--b));
+      text-shadow:
+        /* ① 파란 그림자: 오른쪽·아래로 --s만큼 */
+        var(--s) var(--s) 0 var(--blue),
+        /* ② 검정 테두리: 글자와 그림자를 둘러 --k 두께(16방향) */
+        calc(var(--r1) * 1) 0 0 var(--black),
+        calc(var(--r1) * 0.924) calc(var(--r1) * 0.383) 0 var(--black),
+        calc(var(--r1) * 0.707) calc(var(--r1) * 0.707) 0 var(--black),
+        calc(var(--r1) * 0.383) calc(var(--r1) * 0.924) 0 var(--black),
+        0 calc(var(--r1) * 1) 0 var(--black),
+        calc(var(--r1) * -0.383) calc(var(--r1) * 0.924) 0 var(--black),
+        calc(var(--r1) * -0.707) calc(var(--r1) * 0.707) 0 var(--black),
+        calc(var(--r1) * -0.924) calc(var(--r1) * 0.383) 0 var(--black),
+        calc(var(--r1) * -1) 0 0 var(--black),
+        calc(var(--r1) * -0.924) calc(var(--r1) * -0.383) 0 var(--black),
+        calc(var(--r1) * -0.707) calc(var(--r1) * -0.707) 0 var(--black),
+        calc(var(--r1) * -0.383) calc(var(--r1) * -0.924) 0 var(--black),
+        0 calc(var(--r1) * -1) 0 var(--black),
+        calc(var(--r1) * 0.383) calc(var(--r1) * -0.924) 0 var(--black),
+        calc(var(--r1) * 0.707) calc(var(--r1) * -0.707) 0 var(--black),
+        calc(var(--r1) * 0.924) calc(var(--r1) * -0.383) 0 var(--black),
+        calc(var(--s) + var(--r1) * 1) var(--s) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.924) calc(var(--s) + var(--r1) * 0.383) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.707) calc(var(--s) + var(--r1) * 0.707) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.383) calc(var(--s) + var(--r1) * 0.924) 0 var(--black),
+        var(--s) calc(var(--s) + var(--r1) * 1) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.383) calc(var(--s) + var(--r1) * 0.924) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.707) calc(var(--s) + var(--r1) * 0.707) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.924) calc(var(--s) + var(--r1) * 0.383) 0 var(--black),
+        calc(var(--s) + var(--r1) * -1) var(--s) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.924) calc(var(--s) + var(--r1) * -0.383) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.707) calc(var(--s) + var(--r1) * -0.707) 0 var(--black),
+        calc(var(--s) + var(--r1) * -0.383) calc(var(--s) + var(--r1) * -0.924) 0 var(--black),
+        var(--s) calc(var(--s) + var(--r1) * -1) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.383) calc(var(--s) + var(--r1) * -0.924) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.707) calc(var(--s) + var(--r1) * -0.707) 0 var(--black),
+        calc(var(--s) + var(--r1) * 0.924) calc(var(--s) + var(--r1) * -0.383) 0 var(--black),
+        /* ③ 파랑 테두리: 그 바깥 --b 두께(16방향, 모서리가 둥글게 나옴) */
+        calc(var(--r2) * 1) 0 0 var(--blue),
+        calc(var(--r2) * 0.924) calc(var(--r2) * 0.383) 0 var(--blue),
+        calc(var(--r2) * 0.707) calc(var(--r2) * 0.707) 0 var(--blue),
+        calc(var(--r2) * 0.383) calc(var(--r2) * 0.924) 0 var(--blue),
+        0 calc(var(--r2) * 1) 0 var(--blue),
+        calc(var(--r2) * -0.383) calc(var(--r2) * 0.924) 0 var(--blue),
+        calc(var(--r2) * -0.707) calc(var(--r2) * 0.707) 0 var(--blue),
+        calc(var(--r2) * -0.924) calc(var(--r2) * 0.383) 0 var(--blue),
+        calc(var(--r2) * -1) 0 0 var(--blue),
+        calc(var(--r2) * -0.924) calc(var(--r2) * -0.383) 0 var(--blue),
+        calc(var(--r2) * -0.707) calc(var(--r2) * -0.707) 0 var(--blue),
+        calc(var(--r2) * -0.383) calc(var(--r2) * -0.924) 0 var(--blue),
+        0 calc(var(--r2) * -1) 0 var(--blue),
+        calc(var(--r2) * 0.383) calc(var(--r2) * -0.924) 0 var(--blue),
+        calc(var(--r2) * 0.707) calc(var(--r2) * -0.707) 0 var(--blue),
+        calc(var(--r2) * 0.924) calc(var(--r2) * -0.383) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 1) var(--s) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.924) calc(var(--s) + var(--r2) * 0.383) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.707) calc(var(--s) + var(--r2) * 0.707) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.383) calc(var(--s) + var(--r2) * 0.924) 0 var(--blue),
+        var(--s) calc(var(--s) + var(--r2) * 1) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.383) calc(var(--s) + var(--r2) * 0.924) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.707) calc(var(--s) + var(--r2) * 0.707) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.924) calc(var(--s) + var(--r2) * 0.383) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -1) var(--s) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.924) calc(var(--s) + var(--r2) * -0.383) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.707) calc(var(--s) + var(--r2) * -0.707) 0 var(--blue),
+        calc(var(--s) + var(--r2) * -0.383) calc(var(--s) + var(--r2) * -0.924) 0 var(--blue),
+        var(--s) calc(var(--s) + var(--r2) * -1) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.383) calc(var(--s) + var(--r2) * -0.924) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.707) calc(var(--s) + var(--r2) * -0.707) 0 var(--blue),
+        calc(var(--s) + var(--r2) * 0.924) calc(var(--s) + var(--r2) * -0.383) 0 var(--blue);
+    }
+
+    .headline {
+      --s: 4px; --k: 3px; --b: 3px;   /* 외곽: 파란 그림자 / 검정 / 파랑 두께 */
+      font-weight: 700;
+      font-size: 96px;
+      line-height: 96px;
+      margin-top: 4px;                /* 시안 위치(가운데 y 137)에 맞춤. 아래 .event 여백에서 같은 만큼 뺌 */
+      letter-spacing: 9px;            /* 약 0.09em. 소수점 px이면 글자가 흐려져서 정수로 */
+      padding-left: 9px;              /* 자간 때문에 오른쪽으로 쏠리는 것 보정(자간과 같은 값) */
+      color: var(--green);
+    }
+
+    .event {
+      --s: 4px; --k: 3px; --b: 3px;
+      margin-top: 28px;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 62px;
+      letter-spacing: 2px;
+      padding-left: 2px;
+      color: var(--white);
+    }
+    .event span { display: inline-block; }
+    .event .year { display: block; }
+    .ces-c { color: var(--cyan); }
+    .ces-e { color: var(--yellow); }
+    .ces-s { color: var(--green); }
+
+    /* ---------- 진행 바 ---------- */
+    .progress {
+      --p: 10;                     /* 진행률(%) — 여기 한 곳만 바꾸면 바·숫자가 함께 바뀜(정수로) */
+      /* 바깥 608×48px = 안쪽 600×40px + 흰 테두리 4px.
+         테두리를 box-shadow 4방향으로 그려서 네 모서리가 4×4px씩 비어 보임 */
+      width: calc(min(100%, 608px) - 8px);
+      height: 40px;
+      margin: 45px auto 0;
+      overflow: hidden;            /* 100%일 때 깜빡이는 다음 칸이 테두리 밖으로 나가지 않게 */
+      box-shadow:
+        4px 0 0 var(--white), -4px 0 0 var(--white),
+        0 4px 0 var(--white), 0 -4px 0 var(--white);
+    }
+    .progress__fill {
+      width: calc(var(--p) * 1%);
+      height: 100%;
+      position: relative;
+      /* 0%에서 1%씩 칸 단위로 차오름: 0.8초 뒤 시작, 1.2초 동안 */
+      animation: fill 1.2s steps(var(--p), end) 0.8s both;
+    }
+    /* 파란 채움(::before)은 계속 켜 두고, 그 바로 뒤에 1칸(::after, 1% = 600px 기준 6px)을 더 붙여 깜빡임.
+       채움이 줄었다 늘었다 하는 것처럼 보이지 않고 "다음 칸을 채우는 중"처럼 보이게 함 */
+    .progress__fill::before,
+    .progress__fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: var(--blue);
+    }
+    .progress__fill::before {
+      left: 0;
+      right: 0;
+    }
+    .progress__fill::after {
+      left: 100%;
+      /* 1% 폭, 단 최소 6px(모바일에서 너무 얇지 않게). 정수 px로 반올림 */
+      width: max(6px, calc(100% / var(--p)));
+      width: max(6px, round(nearest, calc(100% / var(--p)), 1px));
+      opacity: 0;                                   /* 바가 다 차기 전에는 숨김 */
+      /* 바가 다 찬 뒤(2.0초) 0.5초 꺼진 채 쉬었다가 0.5초 켜짐 → 반복(1초 박자).
+         속도는 1s를 바꾸면 됨 */
+      animation: blink-cell 1s step-end 2s infinite;
+    }
+    @keyframes blink-cell { 50% { opacity: 1; } }   /* 앞 절반 꺼짐, 뒤 절반 켜짐 */
+    @keyframes fill { from { width: 0; } }
+
+    .percent {
+      font-family: "Mona12", sans-serif;
+      margin-top: 27px;
+      font-size: 40px;                /* 시안 값(12의 배수 아님) */
+      line-height: 40px;
+    }
+    .percent .rocket {
+      display: inline-block;       /* 위아래로 움직이려면 필요 */
+      margin-left: 0.25em;
+      font-family: "Mona12", sans-serif;
+      /* 바가 다 찬 뒤(2.0초)부터 위아래 2px씩 두 칸으로 흔들림, 1.2초에 한 번 */
+      animation: bob 1.2s steps(2, end) 2s infinite;
+    }
+    /* "10%" 글자: 바가 다 찬 뒤(0.8초 + 1.2초 = 2.0초)부터 0.5초 켜짐/0.5초 꺼짐을 계속 반복.
+       속도는 1s(한 번 켜졌다 꺼지는 시간)를 바꾸면 됨. 바의 깜빡이는 칸과 같은 박자 */
+    .percent .value { animation: blink 1s step-end 2s infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes bob {
+      from { transform: translateY(-2px); }
+      to   { transform: translateY(6px); }   /* steps(2)라 실제로는 -2px, +2px 두 칸만 보임 */
+    }
+
+    /* ---------- 배경 장식 ---------- */
+    .sky { position: fixed; inset: 0; pointer-events: none; }
+    .sky > * { position: absolute; transform: translate(-50%, -50%); }
+
+    .dot { width: 8px; height: 8px; background: var(--white); }
+    .emoji { font-family: "Mona12", sans-serif; font-size: 24px; line-height: 1; }
+
+    .twinkle { animation: twinkle 2.4s steps(2, end) infinite; }
+    .twinkle--late { animation-delay: 1.2s; }
+    @keyframes twinkle { 50% { opacity: 0.25; } }
+
+    /* ---------- 처음 열 때 순서대로 "뿅" 등장 (서서히 밝아지지 않고 바로 켜짐) ---------- */
+    .intro { animation: appear 1ms step-end both; }
+    .intro--2 { animation-delay: 0.2s; }
+    .intro--3 { animation-delay: 0.4s; }
+    @keyframes appear { from { opacity: 0; } }
+
+    /* 움직임 줄이기 설정이면 모든 움직임을 끄고 처음부터 완성된 화면을 보여줌 */
+    @media (prefers-reduced-motion: reduce) {
+      .twinkle, .intro, .progress__fill, .progress__fill::after, .percent .rocket, .percent .value { animation: none; }
+    }
+
+    /* 태블릿: 시안의 약 0.75배. 외곽 두께는 비율대로 줄이되 최소 2px */
+    @media (max-width: 899px) {
+      main { padding-top: 30px; }
+      .headline { --s: 3px; --k: 2px; --b: 2px; margin-top: 0; font-size: 72px; line-height: 72px; letter-spacing: 6px; padding-left: 6px; }
+      .event { --s: 3px; --k: 2px; --b: 2px; margin-top: 24px; font-size: 36px; line-height: 46px; }
+      .progress { height: 28px; margin-top: 35px; }   /* 바깥 높이 36px */
+      .percent { margin-top: 19px; font-size: 36px; line-height: 36px; }
+    }
+    /* 모바일: 제목·행사명을 여러 줄로, 화면 가장자리 장식은 일부 숨김 */
+    @media (max-width: 600px) {
+      main { padding-top: 0; }
+      .headline { line-height: 80px; }
+      .event { --s: 2px; --k: 2px; --b: 2px; font-size: 24px; line-height: 32px; letter-spacing: 1px; padding-left: 1px; }
+      .progress { height: 16px; margin-top: 28px; }   /* 바깥 높이 24px */
+      .percent { margin-top: 16px; font-size: 24px; line-height: 24px; }
+      .headline span { display: block; }
+      .event .name { display: block; }
+      .hide-sm { display: none; }
+    }
+
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 배경 장식 (위치는 960×540 시안 기준 %) -->
+  <div class="sky" aria-hidden="true">
+    <i class="dot" style="left:6.8%;  top:22.2%"></i>
+    <i class="dot twinkle" style="left:92.4%; top:12.6%"></i>
+    <i class="dot hide-sm" style="left:21.9%; top:45.4%"></i>
+    <i class="dot twinkle twinkle--late" style="left:86.5%; top:75.6%"></i>
+    <i class="dot" style="left:5.5%;  top:86.3%"></i>
+
+    <span class="emoji twinkle" style="left:10.5%; top:40.6%">⭐</span>
+    <span class="emoji" style="left:82.8%; top:90.2%">⭐</span>
+    <span class="emoji twinkle twinkle--late" style="left:93.4%; top:44.1%">🌟</span>
+    <span class="emoji twinkle" style="left:14.9%; top:90.7%">🌟</span>
+
+    <span class="emoji hide-sm" style="left:7.6%; top:69.6%">🌕</span>
+    <span class="emoji" style="left:93.9%; top:80.4%">🌍</span>
+  </div>
+
+  <main>
+    <h1 class="headline outline intro"><span>COMING</span> <span>SOON</span></h1>
+
+    <p class="event outline intro intro--2">
+      <span class="year">2027 <span class="ces-c">C</span><span class="ces-e">E</span><span class="ces-s">S</span></span>
+      <span class="name">SEUM Dinner</span> <span class="name">Networking Party</span>
+    </p>
+
+    <!-- 진행률은 CSS의 --p 값만 바꾸세요. 아래 10은 스크립트가 꺼졌을 때만 쓰이는 예비값 -->
+    <div class="progress intro intro--3" role="progressbar" aria-label="신청 페이지 준비 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+      <div class="progress__fill"></div>
+    </div>
+    <p class="percent intro intro--3"><span class="value"><span class="num">10</span>%</span><span class="rocket" aria-hidden="true">🚀</span></p>
+
+    <p class="visually-hidden">신청 양식은 준비 중입니다. 곧 열립니다.</p>
+  </main>
+
+  <script>
+    // 진행 바의 --p 값을 읽어 숫자·화면낭독기 값을 맞추고,
+    // 바가 차오르는 동안 실제 채워진 폭을 보고 숫자를 0%부터 올린다.
+    (function () {
+      var bar = document.querySelector('.progress');
+      var fill = bar.querySelector('.progress__fill');
+      var num = document.querySelector('.percent .num');
+      var p = parseInt(getComputedStyle(bar).getPropertyValue('--p'), 10) || 0;
+
+      bar.setAttribute('aria-valuenow', p);   // 화면낭독기에는 최종값만 전달
+      num.textContent = p;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var done = false;
+      function finish() { done = true; num.textContent = p; }
+      function tick() {
+        if (done) return;
+        var cs = getComputedStyle(bar);
+        var inner = bar.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        num.textContent = Math.round(fill.getBoundingClientRect().width / inner * 100);
+        requestAnimationFrame(tick);
+      }
+      fill.addEventListener('animationend', finish);
+      setTimeout(finish, 4000);               // 혹시 애니메이션이 안 돌아도 4초 뒤엔 최종값
+      tick();
+    })();
+  </script>
+
+</body>
+</html>
