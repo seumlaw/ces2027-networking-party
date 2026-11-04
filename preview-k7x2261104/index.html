@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>2027 CES SEUM Dinner Networking Party</title>
-  <meta name="description" content="【페이지 설명】">
+  <title>2027 CES SEUM Dinner Networking Party — Coming Soon</title>
+  <meta name="description" content="법무법인 세움 2027 CES 디너 네트워킹 파티. 신청 양식이 곧 열립니다.">
 
   <!-- 카카오톡·SNS 공유 미리보기: og:url, og:image는 공개 주소(GitHub Pages) 기준 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="2027 CES SEUM Dinner Networking Party">
-  <meta property="og:description" content="【공유 미리보기 설명】">
+  <meta property="og:description" content="Coming soon — 신청 양식이 곧 열립니다.">
   <meta property="og:image" content="https://seumlaw.github.io/ces2027-networking-party/og-image.png">
   <meta property="og:url" content="https://seumlaw.github.io/ces2027-networking-party/">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 
-  <!-- 첫 등장 연출을 보여 줄지 정함(화면이 그려지기 전에 실행). 방문할 때마다 연출이 나옴.
-       보여 주지 않는 경우: 움직임 줄이기 설정 / JS 꺼짐 -->
-  <script>
-    (function () {
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce) document.documentElement.classList.add('is-booting', 'is-waiting');
-    })();
-  </script>
+  <!-- 서체를 다 받을 때까지 처음 등장 움직임을 멈춰 둠(아래 스크립트가 출발시킴).
+       JS가 꺼져 있으면 이 표시가 안 붙어서 바로 움직임 -->
+  <script>document.documentElement.classList.add('is-waiting');</script>
 
-  <!-- 픽셀 서체: 모나(Mona, OFL 1.1) — 제목·버튼·숫자·이모지 -->
+  <!-- 픽셀 서체: 모나(Mona, OFL 1.1) — 버전 2026.10.09 고정.
+       글자는 Mona10x12, 이모지는 Mona12의 픽셀 이모지 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font@2026.10.09/web/mona.css">
-  <!-- 본문 서체: Pretendard(세움 기본 서체, OFL 1.1) — 긴 한글 본문 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
   <style>
     :root {
@@ -38,71 +32,51 @@
       --white: #ffffff;
       --cyan: #00e5ff;
       --yellow: #ffff00;
-      --pixel: "Mona10x12", "Mona12", "Pretendard", sans-serif;
-      --body: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      --cta-h: 60px;               /* 신청하기 버튼 높이 */
+      --star: #ffd53d;
+      --pixel: "Mona10x12", "Mona12", "Courier New", monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body { height: 100%; }
+
     body {
-      font-family: var(--body);
-      font-size: 16px;
-      line-height: 26px;
+      min-height: 100%;
+      padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);   /* 내용이 화면 폭보다 넓어지지 않게(좁은 화면에서 밀림 방지) */
+      place-items: center;
+      overflow: hidden;
+      font-family: var(--pixel);
       color: var(--white);
       background-color: var(--black);
-      word-break: keep-all;        /* 한글이 단어 중간에서 줄바꿈되지 않게 */
-      overflow-wrap: break-word;
-      /* 모바일: 하단 고정 버튼이 마지막 내용을 가리지 않게 버튼 높이 + 위아래 여백 + 테두리만큼 띄움 */
-      padding-bottom: calc(var(--cta-h) + 40px + env(safe-area-inset-bottom, 0px));
-    }
-
-    /* 픽셀 서체를 쓰는 곳은 글자를 부드럽게 만들지 않음(픽셀이 흐려지지 않게) */
-    .pixel, h1, h2, .btn, .label, .time {
-      font-family: var(--pixel);
+      /* 아래쪽 왼쪽 남색, 가운데 올리브, 오른쪽 청록이 은은하게 올라오는 밤하늘 */
+      background-image:
+        radial-gradient(60% 55% at 0% 100%, rgba(10, 12, 70, 0.95), transparent 70%),
+        radial-gradient(45% 45% at 50% 105%, rgba(70, 72, 25, 0.9), transparent 70%),
+        radial-gradient(55% 60% at 100% 100%, rgba(5, 70, 62, 0.95), transparent 70%),
+        radial-gradient(50% 40% at 50% 0%, rgba(0, 0, 0, 1), transparent);
       -webkit-font-smoothing: none;
       font-smooth: never;
     }
 
-    /* ---------- 배경: 밤하늘(화면에 고정, 내용만 스크롤) ---------- */
-    .sky {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(60% 55% at 0% 100%, rgba(10, 12, 70, 0.95), transparent 70%),
-        radial-gradient(45% 45% at 50% 105%, rgba(70, 72, 25, 0.9), transparent 70%),
-        radial-gradient(55% 60% at 100% 100%, rgba(5, 70, 62, 0.95), transparent 70%);
-    }
-    /* 장식은 두 겹: 뒤(점)는 느리게, 앞(별·달·지구)은 빠르게 왼쪽으로 흐름(아래 스크립트가 1px 단위로 움직임).
-       스크립트가 같은 장식을 한 벌 더 오른쪽에 붙여서 끊김 없이 이어짐 */
-    .sky { overflow: hidden; }
-    .sky__layer { position: absolute; inset: 0; will-change: transform; }
-    .sky__set { position: absolute; inset: 0; }
-    .sky__set--copy { left: 100%; right: -100%; }
-    .sky__set > * { position: absolute; transform: translate(-50%, -50%); }
-    .dot { width: 8px; height: 8px; background: var(--white); }
-    .emoji { font-family: "Mona12", sans-serif; font-size: 24px; line-height: 1; }
-    .twinkle { animation: twinkle 2.4s steps(2, end) infinite; }
-    .twinkle--late { animation-delay: 1.2s; }
-    @keyframes twinkle { 50% { opacity: 0.25; } }
-
-    main, footer {
+    main {
       position: relative;
       z-index: 1;
       width: min(100%, 960px);
-      margin: 0 auto;
-      padding: 0 16px;
+      padding-top: 40px;   /* 시안처럼 글 묶음을 화면 가운데보다 20px 아래에 */
+      text-align: center;
     }
 
-    /* ---------- 글자 외곽: 파란 그림자 → 검정 → 파랑 (커밍순과 같음) ----------
-       두께는 각 글자의 --s(그림자) --k(검정) --b(파랑)로 정함 */
+    /* ---------- 글자 외곽: 파란 그림자 → 검정 → 파랑 ----------
+       두께는 각 글자(.headline, .event)의 --s(그림자) --k(검정) --b(파랑)로 정함 */
     .outline {
       --r1: var(--k);
       --r2: calc(var(--k) + var(--b));
       text-shadow:
+        /* ① 파란 그림자: 오른쪽·아래로 --s만큼 */
         var(--s) var(--s) 0 var(--blue),
+        /* ② 검정 테두리: 글자와 그림자를 둘러 --k 두께(16방향) */
         calc(var(--r1) * 1) 0 0 var(--black),
         calc(var(--r1) * 0.924) calc(var(--r1) * 0.383) 0 var(--black),
         calc(var(--r1) * 0.707) calc(var(--r1) * 0.707) 0 var(--black),
@@ -135,6 +109,7 @@
         calc(var(--s) + var(--r1) * 0.383) calc(var(--s) + var(--r1) * -0.924) 0 var(--black),
         calc(var(--s) + var(--r1) * 0.707) calc(var(--s) + var(--r1) * -0.707) 0 var(--black),
         calc(var(--s) + var(--r1) * 0.924) calc(var(--s) + var(--r1) * -0.383) 0 var(--black),
+        /* ③ 파랑 테두리: 그 바깥 --b 두께(16방향, 모서리가 둥글게 나옴) */
         calc(var(--r2) * 1) 0 0 var(--blue),
         calc(var(--r2) * 0.924) calc(var(--r2) * 0.383) 0 var(--blue),
         calc(var(--r2) * 0.707) calc(var(--r2) * 0.707) 0 var(--blue),
@@ -169,513 +144,244 @@
         calc(var(--s) + var(--r2) * 0.924) calc(var(--s) + var(--r2) * -0.383) 0 var(--blue);
     }
 
-    /* ---------- 흰 픽셀 테두리 4px (커밍순 진행 바와 같은 방식, 네 모서리 4×4px 비움) ---------- */
-    .pixel-box {
-      box-shadow:
-        4px 0 0 var(--white), -4px 0 0 var(--white),
-        0 4px 0 var(--white), 0 -4px 0 var(--white);
-    }
-
-    /* ---------- 1. 히어로 ---------- */
-    /* 히어로 높이: 다음 섹션 제목 윗부분이 화면 아래에 살짝 보이게 화면 높이보다 조금 작게.
-       기준은 주소창이 보이는 상태의 화면 높이(svh). svh를 모르는 브라우저는 앞 줄의 vh를 씀.
-       모바일(767px 이하) 124px = 하단 고정 버튼 84px(아래 여백 20 + 버튼 60 + 테두리 4) + 간격 16 + 제목 보이는 높이 24
-       (아이폰 하단 안전 영역만큼 더 뺌) */
-    .hero {
-      position: relative;          /* 첫 등장 진행 바(.boot)와 ▼를 히어로 안에 겹쳐 놓기 위해 */
-      min-height: calc(100vh - 124px - env(safe-area-inset-bottom, 0px));
-      min-height: calc(100svh - 124px - env(safe-area-inset-bottom, 0px));
-      display: grid;
-      place-content: center;
-      gap: 36px;
-      padding: 48px 0;
-      text-align: center;
-    }
-
-    /* ▼ 아래 내용 보기: RPG 대화창 표시. 4px 픽셀 7·5·3·1칸 = 28×16px, 흰색.
-       누르는 영역은 48×48px. 그림 아래 끝이 히어로 맨 아래에서 16px 위 */
-    .more {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 48px;
-      height: 48px;
-      margin-left: -24px;
-      display: grid;
-      place-items: center;
-    }
-    .more svg {
-      display: block;
-      animation: more-bob 1s step-end infinite;   /* 0.5초 위 · 0.5초 아래(4px), 칸 단위로 툭툭 */
-    }
-    @keyframes more-bob { 50% { transform: translateY(4px); } }
-    .more.is-hidden { visibility: hidden; }        /* 40px 넘게 스크롤하면 숨김(탭 키로도 안 감) */
-    #about { scroll-margin-top: 24px; }            /* ▼를 누르면 제목 위로 24px 여유를 두고 멈춤 */
-    html { scroll-behavior: smooth; }
-    /* 히어로 제목 세 줄: 2027 CES / SEUM Dinner / Networking Party
-       외곽선 두께가 줄마다 달라서 .outline을 줄마다 따로 붙임 */
-    .hero h1 { font-weight: 700; }
-    .hero h1 > span { display: block; }
-
-    /* 1줄·3줄(2027 CES, Networking Party): 커밍순 행사명 값(600px 이하 24px, 외곽 2/2/2px) */
-    .hero__event {
-      --s: 2px; --k: 2px; --b: 2px;
-      font-size: 24px;
-      line-height: 28px;
-      letter-spacing: 1px;
-      padding-left: 1px;           /* 자간 때문에 오른쪽으로 쏠리는 것 보정 */
-      color: var(--white);
-    }
-
-    /* 2줄(SEUM Dinner): 커밍순 제목 COMING SOON과 같은 값(600px 이하 72px 두 줄, 외곽 3/2/2px) */
-    .hero__title {
-      --s: 3px; --k: 2px; --b: 2px;
-      margin: 4px 0;
-      font-size: 72px;
-      line-height: 76px;
-      letter-spacing: 6px;
-      padding-left: 6px;
+    .headline {
+      --s: 4px; --k: 3px; --b: 3px;   /* 외곽: 파란 그림자 / 검정 / 파랑 두께 */
+      font-weight: 700;
+      font-size: 96px;
+      line-height: 96px;
+      margin-top: 4px;                /* 시안 위치(가운데 y 137)에 맞춤. 아래 .event 여백에서 같은 만큼 뺌 */
+      letter-spacing: 9px;            /* 약 0.09em. 소수점 px이면 글자가 흐려져서 정수로 */
+      padding-left: 9px;              /* 자간 때문에 오른쪽으로 쏠리는 것 보정(자간과 같은 값) */
       color: var(--green);
     }
-    .hero__title span { display: block; }   /* 600px 이하: SEUM / Dinner 두 줄 */
+
+    .event {
+      --s: 4px; --k: 3px; --b: 3px;
+      margin-top: 28px;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 62px;
+      letter-spacing: 2px;
+      padding-left: 2px;
+      color: var(--white);
+    }
+    .event span { display: inline-block; }
+    .event .year { display: block; }
     .ces-c { color: var(--cyan); }
     .ces-e { color: var(--yellow); }
     .ces-s { color: var(--green); }
-    .hero__meta {
-      font-family: "Mona12", var(--body);
-      font-size: 24px;
-      line-height: 36px;
-    }
-    .hero .btn { display: none; }  /* 모바일은 하단 고정 버튼을 씀 */
 
-    /* ---------- 섹션 공통 ---------- */
-    section + section { margin-top: 96px; }
-    h2 {
-      --s: 2px; --k: 2px; --b: 2px;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 36px;
-      letter-spacing: 1px;
-      color: var(--green);
-      margin-bottom: 24px;
-    }
-    .panel {
-      margin: 4px;                 /* 흰 테두리(바깥 4px)가 잘리지 않게 */
-      padding: 24px 20px;
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    /* 일시·장소, 문의: 항목 이름 + 값 */
-    .info { display: grid; gap: 16px; }
-    .info div { display: grid; gap: 4px; }
-    .label {
-      font-size: 24px;
-      line-height: 24px;
-      color: var(--cyan);
-    }
-
-    /* 프로그램: 시간 + 순서 */
-    .program { list-style: none; display: grid; gap: 16px; }
-    .program li { display: grid; gap: 4px; }
-    .time {
-      font-family: "Mona12", var(--body);
-      font-size: 24px;
-      line-height: 24px;
-      color: var(--yellow);
-    }
-
-    /* 페이지 맨 아래 신청하기 버튼: 가운데 정렬 */
-    .page-cta {
-      margin-top: 96px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* ---------- 신청하기 버튼 ---------- */
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: var(--cta-h);
-      padding: 0 32px;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 24px;
-      letter-spacing: 1px;
-      color: var(--white);
-      background: var(--blue);
-      text-decoration: none;
-      /* 흰 테두리 4px + 아래 받침 4px(아래쪽만 총 8px). 네 모서리는 4×4px씩 비움 */
-      box-shadow:
-        4px 0 0 var(--white), -4px 0 0 var(--white), 0 -4px 0 var(--white),
-        4px 4px 0 var(--white), -4px 4px 0 var(--white), 0 8px 0 var(--white);
-    }
-    /* 눌림: 버튼이 4px 아래로 내려가고 받침이 없어짐(아래 끝 위치는 그대로라 눌린 것처럼 보임).
-       부드럽게 움직이지 않고 한 번에 툭 */
-    .btn:active {
-      transform: translateY(4px);
+    /* ---------- 진행 바 ---------- */
+    .progress {
+      --p: 10;                     /* 진행률(%) — 여기 한 곳만 바꾸면 바·숫자가 함께 바뀜(정수로) */
+      /* 바깥 608×48px = 안쪽 600×40px + 흰 테두리 4px.
+         테두리를 box-shadow 4방향으로 그려서 네 모서리가 4×4px씩 비어 보임 */
+      width: calc(min(100%, 608px) - 8px);
+      height: 40px;
+      margin: 45px auto 0;
+      overflow: hidden;            /* 100%일 때 깜빡이는 다음 칸이 테두리 밖으로 나가지 않게 */
       box-shadow:
         4px 0 0 var(--white), -4px 0 0 var(--white),
         0 4px 0 var(--white), 0 -4px 0 var(--white);
     }
-    @media (hover: hover) {        /* 마우스가 있는 기기에서만: 올리면 눌림(휴대폰은 누를 때만) */
-      .btn:hover {
-        transform: translateY(4px);
-        box-shadow:
-          4px 0 0 var(--white), -4px 0 0 var(--white),
-          0 4px 0 var(--white), 0 -4px 0 var(--white);
-      }
+    .progress__fill {
+      width: calc(var(--p) * 1%);
+      height: 100%;
+      position: relative;
+      /* 0%에서 1%씩 칸 단위로 차오름: 1.3초 뒤 시작(10%가 나타나는 1.0초 + 0.3초), 1.2초 동안 */
+      animation: fill 1.2s steps(var(--p), end) 1.3s both;
     }
-    .btn:hover { color: var(--yellow); }
-    /* 키보드 포커스: 노랑 4px, 흰 테두리 바깥으로 4px 띄움 */
-    a:focus-visible {
-      outline: 4px solid var(--yellow);
-      outline-offset: 8px;
+    /* 파란 채움(::before)은 계속 켜 두고, 그 바로 뒤에 1칸(::after, 1% = 600px 기준 6px)을 더 붙여 깜빡임.
+       채움이 줄었다 늘었다 하는 것처럼 보이지 않고 "다음 칸을 채우는 중"처럼 보이게 함 */
+    .progress__fill::before,
+    .progress__fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: var(--blue);
     }
-    .btn:focus-visible { color: var(--yellow); }
+    .progress__fill::before {
+      left: 0;
+      right: 0;
+    }
+    .progress__fill::after {
+      left: 100%;
+      /* 1% 폭, 단 최소 6px(모바일에서 너무 얇지 않게). 정수 px로 반올림 */
+      width: max(6px, calc(100% / var(--p)));
+      width: max(6px, round(nearest, calc(100% / var(--p)), 1px));
+      opacity: 0;                                   /* 바가 다 차기 전에는 숨김 */
+      /* 바가 다 찬 뒤(2.5초) 0.5초 꺼진 채 쉬었다가 0.5초 켜짐 → 반복(1초 박자).
+         속도는 1s를 바꾸면 됨 */
+      animation: blink-cell 1s step-end 2.5s infinite;
+    }
+    @keyframes blink-cell { 50% { opacity: 1; } }   /* 앞 절반 꺼짐, 뒤 절반 켜짐 */
+    @keyframes fill { from { width: 0; } }
 
-    /* 모바일 하단 고정 버튼 */
-    .cta-fixed {
-      position: fixed;
-      z-index: 10;
-      left: 20px;                  /* 16px 여백 + 흰 테두리 4px */
-      right: 20px;
-      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    .percent {
+      font-family: "Mona12", sans-serif;
+      margin-top: 27px;
+      font-size: 40px;                /* 시안 값(12의 배수 아님) */
+      line-height: 40px;
     }
-    /* 맨 아래 신청하기 버튼이 화면에 보이는 동안은 숨김(버튼 두 개가 같이 보이지 않게). 숨긴 동안 탭 키로도 안 감 */
-    .cta-fixed.is-hidden { visibility: hidden; }
+    .percent .rocket {
+      display: inline-block;       /* 위아래로 움직이려면 필요 */
+      margin-left: 0.25em;
+      font-family: "Mona12", sans-serif;
+      /* 바가 다 찬 뒤(2.5초)부터 위아래 2px씩 두 칸으로 흔들림, 1.2초에 한 번 */
+      animation: bob 1.2s steps(2, end) 2.5s infinite;
+    }
+    /* "10%" 글자: 바가 다 찬 뒤(1.3초 + 1.2초 = 2.5초)부터 0.5초 켜짐/0.5초 꺼짐을 계속 반복.
+       속도는 1s(한 번 켜졌다 꺼지는 시간)를 바꾸면 됨. 바의 깜빡이는 칸과 같은 박자 */
+    .percent .value { animation: blink 1s step-end 2.5s infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes bob {
+      from { transform: translateY(-2px); }
+      to   { transform: translateY(6px); }   /* steps(2)라 실제로는 -2px, +2px 두 칸만 보임 */
+    }
 
-    /* ---------- 문의·꼬리말 ---------- */
-    footer {
-      margin-top: 96px;
-      padding-bottom: 48px;
-      font-size: 14px;
-      line-height: 22px;
-      color: rgba(255, 255, 255, 0.7);
-      text-align: center;
+    /* ---------- 배경 장식 ---------- */
+    .sky { position: fixed; inset: 0; pointer-events: none; }
+    .sky > * { position: absolute; transform: translate(-50%, -50%); }
+
+    .dot { width: 8px; height: 8px; background: var(--white); }
+    .emoji { font-family: "Mona12", sans-serif; font-size: 24px; line-height: 1; }
+
+    .twinkle { animation: twinkle 2.4s steps(2, end) infinite; }
+    .twinkle--late { animation-delay: 1.2s; }
+    @keyframes twinkle { 50% { opacity: 0.25; } }
+
+    /* ---------- 처음 열 때 순서대로 "뿅" 등장 (서서히 밝아지지 않고 바로 켜짐) ---------- */
+    /* 제목 0초(혼자 0.4초 떠 있음) → 행사명 0.4초 → 진행 바 0.7초 → 10%·로켓 1.0초. 그 뒤 간격은 0.3s씩
+       (바꾸면 위의 진행 바 차오르기·깜빡임·로켓 시작 시간도 같은 만큼 옮길 것) */
+    /* 길이 0초: 시작 시간이 되는 순간 바로 켜짐.
+       (1ms 같은 아주 짧은 길이는 브라우저 소수점 오차로 꺼진 채 멈출 수 있어서 0초로 씀) */
+    .intro { animation: appear 0s both; }
+    .intro--2 { animation-delay: 0.4s; }
+    .intro--3 { animation-delay: 0.7s; }
+    .intro--4 { animation-delay: 1s; }
+    @keyframes appear { from { opacity: 0; } }
+
+    /* 서체를 받는 동안은 시계를 멈춰 둠(안 보이는 상태로 대기) → 서체가 오면 위 순서대로 출발 */
+    .is-waiting .intro,
+    .is-waiting .progress__fill,
+    .is-waiting .progress__fill::after,
+    .is-waiting .percent .rocket,
+    .is-waiting .percent .value { animation-play-state: paused; }
+    .is-waiting .intro { opacity: 0; }   /* 기다리는 동안 확실히 숨김(제목은 시작 시간 0초라 멈춰 있어도 켜지기 때문) */
+
+    /* 움직임 줄이기 설정이면 모든 움직임을 끄고 처음부터 완성된 화면을 보여줌 */
+    @media (prefers-reduced-motion: reduce) {
+      .twinkle, .intro, .progress__fill, .progress__fill::after, .percent .rocket, .percent .value { animation: none; }
+    }
+
+    /* 태블릿: 시안의 약 0.75배. 외곽 두께는 비율대로 줄이되 최소 2px */
+    @media (max-width: 899px) {
+      main { padding-top: 30px; }
+      .headline { --s: 3px; --k: 2px; --b: 2px; margin-top: 0; font-size: 72px; line-height: 72px; letter-spacing: 6px; padding-left: 6px; }
+      .event { --s: 3px; --k: 2px; --b: 2px; margin-top: 24px; font-size: 36px; line-height: 46px; }
+      .progress { height: 28px; margin-top: 35px; }   /* 바깥 높이 36px */
+      .percent { margin-top: 19px; font-size: 36px; line-height: 36px; }
+    }
+    /* 모바일: 제목·행사명을 여러 줄로, 화면 가장자리 장식은 일부 숨김 */
+    @media (max-width: 600px) {
+      main { padding-top: 0; }
+      .headline { line-height: 80px; }
+      .event { --s: 2px; --k: 2px; --b: 2px; font-size: 24px; line-height: 32px; letter-spacing: 1px; padding-left: 1px; }
+      .progress { height: 16px; margin-top: 28px; }   /* 바깥 높이 24px */
+      .percent { margin-top: 16px; font-size: 24px; line-height: 24px; }
+      .headline span { display: block; }
+      .event .name { display: block; }
+      .hide-sm { display: none; }
     }
 
     .visually-hidden {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip: rect(0 0 0 0); white-space: nowrap;
     }
-
-    /* ---------- 첫 등장 연출 (처음 방문할 때 한 번) ----------
-       서체를 받으면 출발(최대 1.5초 대기, 기다리는 동안은 별만 보임)
-       0 – 1.0초 진행 바 10% → 100%(1%씩 칸 단위)
-       1.0 – 2.2초 READY! 두 번 깜빡임(0.3초 켜짐 · 0.3초 꺼짐 × 2)
-       2.2초 바·READY! 사라짐 → 제목 2.2 / 2.5 / 2.8초 → 날짜·버튼 3.1초
-       시간은 0s 길이 애니메이션 + 시작 시간(delay)으로 맞춤(0s는 소수점 오차로 꺼진 채 멈추지 않음) */
-    .boot { display: none; }
-    .is-booting .boot {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: grid;
-      align-content: center;
-      justify-items: center;
-      pointer-events: none;
-      animation: boot-hide 0s 2.2s forwards;
-    }
-    @keyframes boot-hide { to { visibility: hidden; } }
-
-    /* 진행 바: 커밍순과 같음(흰 테두리 4px, 네 모서리 4×4px 비움). 바깥 높이 24px(600px 이하) */
-    .boot__bar {
-      width: min(calc(100% - 8px), 600px);
-      height: 16px;
-      box-shadow:
-        4px 0 0 var(--white), -4px 0 0 var(--white),
-        0 4px 0 var(--white), 0 -4px 0 var(--white);
-    }
-    .boot__fill {
-      width: 100%;
-      height: 100%;
-      background: var(--blue);
-      animation: boot-fill 1s steps(90, end) both;   /* 10%에서 1%씩 90칸 */
-    }
-    @keyframes boot-fill { from { width: 10%; } }
-
-    /* READY!: 커밍순 10% 숫자 자리·크기(600px 이하 24px) */
-    .boot__ready {
-      margin-top: 16px;
-      font-family: var(--pixel);
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 24px;
-      color: var(--green);
-      -webkit-font-smoothing: none;
-      opacity: 0;
-      animation: ready-blink 0.6s step-end 1s 2;
-    }
-    @keyframes ready-blink { 0% { opacity: 1; } 50%, 100% { opacity: 0; } }
-
-    /* 바가 사라진 뒤 제목 세 줄 → 날짜 차례로 등장 */
-    .is-booting .boot-1 { animation: appear 0s 2.2s both; }
-    .is-booting .boot-2 { animation: appear 0s 2.5s both; }
-    .is-booting .boot-3 { animation: appear 0s 2.8s both; }
-    .is-booting .boot-4 { animation: appear 0s 3.1s both; }
-    @keyframes appear { from { opacity: 0; } }
-    /* 버튼은 안 보이는 동안 누르거나 탭 키로 가지 않게 visibility로 숨김 */
-    .is-booting .boot-btn,
-    .is-booting .cta-fixed { animation: appear-v 0s 3.1s both; }
-    @keyframes appear-v { from { visibility: hidden; } }
-
-    /* 서체를 받는 동안은 시계를 멈추고 진행 바도 숨김 */
-    .is-waiting .boot { opacity: 0; }
-    .is-waiting .boot,
-    .is-waiting .boot__fill,
-    .is-waiting .boot__ready,
-    .is-waiting .boot-1, .is-waiting .boot-2, .is-waiting .boot-3, .is-waiting .boot-4,
-    .is-waiting .boot-btn, .is-waiting .cta-fixed { animation-play-state: paused; }
-
-    /* ---------- 601px 이상: 행사명 36px, SEUM Dinner 72px 한 줄 (커밍순 899px 이하 값) ---------- */
-    @media (min-width: 601px) {
-      .hero__event {
-        --s: 3px; --k: 2px; --b: 2px;
-        font-size: 36px;
-        line-height: 40px;
-        letter-spacing: 2px;
-        padding-left: 2px;
-      }
-      .hero__title { margin: 4px 0; line-height: 72px; }
-      .hero__title span { display: inline; }
-      .boot__bar { height: 28px; }                 /* 바깥 높이 36px */
-      .boot__ready { margin-top: 19px; font-size: 36px; line-height: 36px; }
-    }
-
-    /* ---------- 768px 이상(태블릿): 고정 버튼 없앰, 글자 키움 ---------- */
-    @media (min-width: 768px) {
-      body { font-size: 18px; line-height: 30px; padding-bottom: 0; }
-      main, footer { padding: 0 32px; }
-      .cta-fixed { display: none; }
-      /* 고정 버튼이 없으니 32px(다음 제목 보이는 높이)만 뺌 */
-      .hero {
-        min-height: calc(100vh - 32px);
-        min-height: calc(100svh - 32px);
-      }
-      .hero .btn { display: flex; justify-self: center; }
-      .page-cta { margin-top: 120px; }
-      section + section { margin-top: 120px; }
-      h2 {
-        --s: 3px; --k: 2px; --b: 2px;
-        font-size: 36px;
-        line-height: 48px;
-        letter-spacing: 2px;
-        margin-bottom: 36px;
-      }
-      .panel { padding: 36px 40px; }
-      .info div, .program li {
-        grid-template-columns: 192px 1fr;
-        gap: 24px;
-        align-items: baseline;
-      }
-      .info, .program { gap: 24px; }
-    }
-
-    /* ---------- 900px 이상: 행사명 48px, SEUM Dinner 96px (커밍순 시안 값) ---------- */
-    @media (min-width: 900px) {
-      .hero__event {
-        --s: 4px; --k: 3px; --b: 3px;
-        font-size: 48px;
-        line-height: 52px;
-      }
-      .hero__title {
-        --s: 4px; --k: 3px; --b: 3px;
-        margin: 8px 0;
-        font-size: 96px;
-        line-height: 96px;
-        letter-spacing: 9px;
-        padding-left: 9px;
-      }
-      .boot__bar { height: 40px; }                 /* 바깥 높이 48px(시안 값) */
-      .boot__ready { margin-top: 27px; font-size: 40px; line-height: 40px; }   /* 시안 값(12의 배수 아님) */
-    }
-
-    /* 움직임 줄이기 설정이면 별 반짝임·첫 등장 연출을 끄고 완성된 화면만 보여 줌
-       (배경 흐름은 스크립트가 이 설정을 보고 아예 시작하지 않음. 버튼 눌림은 남김) */
-    @media (prefers-reduced-motion: reduce) {
-      .twinkle { animation: none; }
-      .boot { display: none !important; }
-      .boot-1, .boot-2, .boot-3, .boot-4, .boot-btn, .cta-fixed { animation: none !important; }
-      .more svg { animation: none; }              /* ▼는 튀지 않고 그냥 보임 */
-      html { scroll-behavior: auto; }             /* ▼를 누르면 미끄러지지 않고 바로 이동 */
-    }
   </style>
 </head>
 <body>
 
-  <!-- 배경 장식 (위치는 화면 기준 %). 뒤 겹 = 점(느리게), 앞 겹 = 별·달·지구(빠르게) -->
+  <!-- 배경 장식 (위치는 960×540 시안 기준 %) -->
   <div class="sky" aria-hidden="true">
-    <div class="sky__layer sky__layer--back">
-      <div class="sky__set">
-        <i class="dot" style="left:6.8%;  top:22.2%"></i>
-        <i class="dot twinkle" style="left:92.4%; top:12.6%"></i>
-        <i class="dot" style="left:30%; top:6%"></i>
-        <i class="dot twinkle twinkle--late" style="left:86.5%; top:75.6%"></i>
-        <i class="dot" style="left:5.5%;  top:86.3%"></i>
-      </div>
-    </div>
-    <div class="sky__layer sky__layer--front">
-      <div class="sky__set">
-        <span class="emoji twinkle" style="left:10.5%; top:40.6%">⭐</span>
-        <span class="emoji twinkle twinkle--late" style="left:93.4%; top:44.1%">🌟</span>
-        <span class="emoji" style="left:7.6%; top:69.6%">🌕</span>
-        <span class="emoji" style="left:93.9%; top:80.4%">🌍</span>
-      </div>
-    </div>
+    <i class="dot" style="left:6.8%;  top:22.2%"></i>
+    <i class="dot twinkle" style="left:92.4%; top:12.6%"></i>
+    <i class="dot hide-sm" style="left:21.9%; top:45.4%"></i>
+    <i class="dot twinkle twinkle--late" style="left:86.5%; top:75.6%"></i>
+    <i class="dot" style="left:5.5%;  top:86.3%"></i>
+
+    <span class="emoji twinkle" style="left:10.5%; top:40.6%">⭐</span>
+    <span class="emoji" style="left:82.8%; top:90.2%">⭐</span>
+    <span class="emoji twinkle twinkle--late" style="left:93.4%; top:44.1%">🌟</span>
+    <span class="emoji twinkle" style="left:14.9%; top:90.7%">🌟</span>
+
+    <span class="emoji hide-sm" style="left:7.6%; top:69.6%">🌕</span>
+    <span class="emoji" style="left:93.9%; top:80.4%">🌍</span>
   </div>
 
   <main>
-    <!-- 1. 히어로 -->
-    <header class="hero">
-      <!-- 첫 등장 진행 바 (처음 방문할 때만 보임) -->
-      <div class="boot" aria-hidden="true">
-        <div class="boot__bar"><div class="boot__fill"></div></div>
-        <p class="boot__ready">READY!</p>
-      </div>
+    <h1 class="headline outline intro"><span>COMING</span> <span>SOON</span></h1>
 
-      <h1>
-        <span class="hero__event outline boot-1">2027 <span class="ces-c">C</span><span class="ces-e">E</span><span class="ces-s">S</span></span>
-        <span class="hero__title outline boot-2"><span>SEUM</span> <span>Dinner</span></span>
-        <span class="hero__event outline boot-3">Networking Party</span>
-      </h1>
-      <p class="hero__meta boot-4">【 Wednesday, January 10, 2027 】</p>
-      <a class="btn boot-btn" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
+    <p class="event outline intro intro--2">
+      <span class="year">2027 <span class="ces-c">C</span><span class="ces-e">E</span><span class="ces-s">S</span></span>
+      <span class="name">SEUM Dinner</span> <span class="name">Networking Party</span>
+    </p>
 
-      <!-- ▼ 아래 내용 보기(신청하기 버튼과 함께 등장) -->
-      <a class="more boot-btn" href="#about" aria-label="아래 내용 보기">
-        <svg width="28" height="16" viewBox="0 0 7 4" shape-rendering="crispEdges" aria-hidden="true" focusable="false">
-          <path fill="#ffffff" d="M0 0h7v1H0zM1 1h5v1H1zM2 2h3v1H2zM3 3h1v1H3z"/>
-        </svg>
-      </a>
-    </header>
-
-    <!-- 2. 행사 소개 -->
-    <section id="about" aria-labelledby="about-title">
-      <h2 id="about-title" class="outline">행사 소개</h2>
-      <div class="panel pixel-box">
-        <p>CES 2027을 찾는 분들과 함께하는 저녁 네트워킹 파티에 초대 드립니다. 법무법인 세움이 기술과 산업 현장에서 활동하는 분들을 한자리에 모십니다. 편안한 저녁 식사와 함께 새로운 인연과 이야기를 나눠 보세요.</p>
-      </div>
-    </section>
-
-    <!-- 3. 일시·장소 -->
-    <section aria-labelledby="when-title">
-      <h2 id="when-title" class="outline">일시 · 장소</h2>
-      <dl class="info panel pixel-box">
-        <div><dt class="label">일시</dt><dd>【 2027. 1. 10.(일) 오후 7시 30분 】</dd></div>
-        <div><dt class="label">장소</dt><dd>【 Gen Korean BBQ 】</dd></div>
-        <div><dt class="label">주소</dt><dd>【 3663 S Las Vegas Blvd suite 580 Las Vegas, NV 89109-4345 】</dd></div>
-      </dl>
-    </section>
-
-    <!-- 4. 프로그램 (줄 수는 원고에 맞춰 늘리거나 줄이세요) -->
-    <section aria-labelledby="program-title">
-      <h2 id="program-title" class="outline">프로그램</h2>
-      <ol class="program panel pixel-box">
-        <li><span class="time">【00:00】</span><span>【순서 이름】</span></li>
-        <li><span class="time">【00:00】</span><span>【순서 이름】</span></li>
-        <li><span class="time">【00:00】</span><span>【순서 이름】</span></li>
-      </ol>
-    </section>
-
-    <!-- 5. 문의 -->
-    <section aria-labelledby="contact-title">
-      <h2 id="contact-title" class="outline">문의</h2>
-      <div class="panel pixel-box">
-        <p>행사 관련 문의는 아래로 연락해 주세요.</p>
-        <dl class="info" style="margin-top: 24px">
-          <div><dt class="label">부서</dt><dd>【 사업 전략실 · 홍보 마케팅파트 】</dd></div>
-          <div><dt class="label">이메일</dt><dd>【 seummkt@seumlaw.com 】</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- 페이지 맨 아래 신청하기 버튼(가운데) -->
-    <div class="page-cta">
-      <a class="btn" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
+    <!-- 진행률은 CSS의 --p 값만 바꾸세요. 아래 10은 스크립트가 꺼졌을 때만 쓰이는 예비값 -->
+    <div class="progress intro intro--3" role="progressbar" aria-label="신청 페이지 준비 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+      <div class="progress__fill"></div>
     </div>
+    <p class="percent intro intro--4"><span class="value"><span class="num">10</span>%</span><span class="rocket" aria-hidden="true">🚀</span></p>
+
+    <p class="visually-hidden">신청 양식은 준비 중입니다. 곧 열립니다.</p>
   </main>
 
-  <footer>
-    <p>법무법인 세움</p>
-  </footer>
-
-  <!-- 모바일 하단 고정 신청하기 버튼(767px 이하에서만 보임) -->
-  <a class="btn cta-fixed" href="【구글폼 링크】" target="_blank" rel="noopener">신청하기<span class="visually-hidden"> (새 창에서 열림)</span></a>
-
   <script>
-    // 맨 아래 신청하기 버튼이 화면에 조금이라도 보이면 하단 고정 버튼을 숨기고, 벗어나면 다시 보여 줌.
-    // (이 기능을 못 쓰는 브라우저에서는 고정 버튼이 항상 보임)
+    // 진행 바의 --p 값을 읽어 숫자·화면낭독기 값을 맞추고,
+    // 바가 차오르는 동안 실제 채워진 폭을 보고 숫자를 0%부터 올린다.
     (function () {
-      var cta = document.querySelector('.cta-fixed');
-      var apply = document.querySelector('.page-cta');
-      if (!cta || !apply || !('IntersectionObserver' in window)) return;
-      new IntersectionObserver(function (entries) {
-        cta.classList.toggle('is-hidden', entries[0].isIntersecting);
-      }).observe(apply);
-    })();
+      var bar = document.querySelector('.progress');
+      var fill = bar.querySelector('.progress__fill');
+      var num = document.querySelector('.percent .num');
+      var p = parseInt(getComputedStyle(bar).getPropertyValue('--p'), 10) || 0;
 
-    // 첫 등장 연출: 서체(글자용·이모지용)를 받으면 출발, 늦어도 1.5초 뒤 출발. 3.1초에 끝남
-    (function () {
-      var root = document.documentElement;
-      if (!root.classList.contains('is-booting')) return;
+      bar.setAttribute('aria-valuenow', p);   // 화면낭독기에는 최종값만 전달
+      num.textContent = p;
+
+      // 등장 순서 출발: 서체(글자용·이모지용)를 다 받으면 바로, 늦어도 1.5초 뒤에는 출발
       var started = false;
       function start() {
         if (started) return;
         started = true;
-        root.classList.remove('is-waiting');
-        setTimeout(function () {
-          root.classList.remove('is-booting');   // 연출 끝: 진행 바를 지우고 평소 화면으로
-        }, 3200);
+        document.documentElement.classList.remove('is-waiting');
+        setTimeout(finish, 4000);             // 혹시 애니메이션이 안 돌아도 출발 4초 뒤엔 최종값
       }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { start(); return; }
+
+      var done = false;
+      function finish() { done = true; num.textContent = p; }
+      function tick() {
+        if (done) return;
+        var cs = getComputedStyle(bar);
+        var inner = bar.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        num.textContent = Math.round(fill.getBoundingClientRect().width / inner * 100);
+        requestAnimationFrame(tick);
+      }
+      fill.addEventListener('animationend', finish);
+      tick();
+
       setTimeout(start, 1500);
       if (document.fonts && document.fonts.load) {
         Promise.all([
-          document.fonts.load('700 48px "Mona10x12"', 'SEUM Dinner READY!'),
-          document.fonts.load('24px "Mona12"', '⭐🌟🌕🌍')
+          document.fonts.load('700 48px "Mona10x12"', 'COMING SOON'),
+          document.fonts.load('40px "Mona12"', '10%🚀⭐')
         ]).then(start, start);
       } else {
         start();
       }
     })();
-
-    // 배경 흐름: 뒤 겹(점)은 240초, 앞 겹(별·달·지구)은 120초에 화면 폭 하나만큼 왼쪽으로.
-    // 픽셀이 번지지 않게 1px 단위로 끊어서 움직임. 움직임 줄이기 설정이면 시작하지 않음
-    (function () {
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var layers = [
-        { el: document.querySelector('.sky__layer--back'),  period: 240000 },
-        { el: document.querySelector('.sky__layer--front'), period: 120000 }
-      ];
-      layers.forEach(function (l) {
-        var copy = l.el.querySelector('.sky__set').cloneNode(true);   // 같은 장식을 오른쪽에 한 벌 더
-        copy.classList.add('sky__set--copy');
-        l.el.appendChild(copy);
-        l.last = -1;
-      });
-      var t0 = performance.now();
-      function frame(now) {
-        var w = window.innerWidth;
-        layers.forEach(function (l) {
-          var x = Math.floor((now - t0) / l.period * w) % w;
-          if (x !== l.last) { l.el.style.transform = 'translateX(' + (-x) + 'px)'; l.last = x; }
-        });
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    })();
-
-    // ▼: 40px 넘게 스크롤하면 숨기고, 맨 위로 돌아오면 다시 보여 줌
-    (function () {
-      var more = document.querySelector('.more');
-      if (!more) return;
-      function update() { more.classList.toggle('is-hidden', window.scrollY > 40); }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    })();
-
-    // 아이폰 Safari에서 버튼을 누를 때 눌림(:active)이 보이게 하는 장치(동작 없음)
-    document.addEventListener('touchstart', function () {}, { passive: true });
   </script>
 
 </body>
